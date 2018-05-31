@@ -2,11 +2,10 @@
 using System.Collections;
 using System.Collections.Generic;
 
-enum GameState 	{ MainMenu, InGame, EndScreen }
-enum GameTurn 	{ Player1, Player2 }
-enum GameResult { StillPlaying, Player1Won, Player2Won }
-public enum SlotState { Empty, Player1, Player2 }
-
+enum GameState 			{ MainMenu, InGame, EndScreen }
+enum GameTurn 			{ Player1, Player2 }
+enum GameResult 		{ StillPlaying, Player1Won, Player2Won }
+public enum SlotState 	{ Empty, Player1, Player2 }
 
 public class Game : MonoBehaviour {
 
@@ -60,15 +59,9 @@ public class Game : MonoBehaviour {
 
 	private void initializeGameData() {
 		slotStates = new SlotState[9] { 
-			SlotState.Empty,
-			SlotState.Empty,
-			SlotState.Empty,
-			SlotState.Empty,
-			SlotState.Empty,
-			SlotState.Empty,
-			SlotState.Empty,
-			SlotState.Empty,
-			SlotState.Empty
+			SlotState.Empty, SlotState.Empty, SlotState.Empty,
+			SlotState.Empty, SlotState.Empty, SlotState.Empty,
+			SlotState.Empty, SlotState.Empty, SlotState.Empty
 		};
 
 		gameTurnsCount = 0;
@@ -106,11 +99,63 @@ public class Game : MonoBehaviour {
 		endScreenUI.Hide();
 	}
 
+	private void onGridSlotClick(int slotIndex) {
+		processSlotClick(slotIndex);
+	}
+
 	private void switchTurn() {
 		if (gameTurn == GameTurn.Player1)
 			gameTurn = GameTurn.Player2;
 		else
 			gameTurn = GameTurn.Player1;
+	}
+
+	private void processSlotClick(int slotIndex) {
+		bool needToSwitchTurn = false;
+
+		switch(gameTurn) {
+			case GameTurn.Player1:
+				if (gameTurnsCount < 6) {
+					slotStates[slotIndex] = SlotState.Player1;
+					gameUI.OccupySlotWithPlayer1Color(slotIndex);
+					needToSwitchTurn = true;
+				} else {
+					if (slotStates[slotIndex] == SlotState.Player1 && !movingSlotTurn) {
+						setMovingSlotStateForIfHaveEmptyNeighbors(slotIndex);
+					} else if (slotStates[slotIndex] == SlotState.Empty && movingSlotTurn) {
+						moveSavedSlotToTheDestinationIfHaveEmptyNeighbor(slotIndex, SlotState.Player1);
+						needToSwitchTurn = true;
+					}
+				}
+				break;
+			case GameTurn.Player2:
+				if (gameTurnsCount < 6) {
+					slotStates[slotIndex] = SlotState.Player2;
+					gameUI.OccupySlotWithPlayer2Color(slotIndex);
+					needToSwitchTurn = true;
+				} else {
+					if (slotStates[slotIndex] == SlotState.Player2 && !movingSlotTurn) {
+						setMovingSlotStateForIfHaveEmptyNeighbors(slotIndex);
+					} else if (slotStates[slotIndex] == SlotState.Empty && movingSlotTurn) {
+						moveSavedSlotToTheDestinationIfHaveEmptyNeighbor(slotIndex, SlotState.Player2);
+						needToSwitchTurn = true;
+					}
+				}
+				break;
+		}
+
+		if (needToSwitchTurn) {
+			switchTurn();
+			updateUIWithPlayerTurn();
+			gameTurnsCount++;
+		}
+
+		GameResult gameResult = getGameResultForTurn();
+
+		if (gameResult != GameResult.StillPlaying) {
+			gameUI.FadeBothAvatars();
+			toggleEndScreenWithResult(gameResult);
+		}
 	}
 
 	private void updateUIWithPlayerTurn() {
@@ -213,54 +258,6 @@ public class Game : MonoBehaviour {
 			succeeded = true;
 		}
 		return succeeded;
-	}
-
-	private void onGridSlotClick(int slotIndex) {
-		bool needToSwitchTurn = false;
-
-		switch(gameTurn) {
-			case GameTurn.Player1:
-				if (gameTurnsCount < 6) {
-					slotStates[slotIndex] = SlotState.Player1;
-					gameUI.OccupySlotWithPlayer1Color(slotIndex);
-					needToSwitchTurn = true;
-				} else {
-					if (slotStates[slotIndex] == SlotState.Player1 && !movingSlotTurn) {
-						setMovingSlotStateForIfHaveEmptyNeighbors(slotIndex);
-					} else if (slotStates[slotIndex] == SlotState.Empty && movingSlotTurn) {
-						moveSavedSlotToTheDestinationIfHaveEmptyNeighbor(slotIndex, SlotState.Player1);
-						needToSwitchTurn = true;
-					}
-				}
-				break;
-			case GameTurn.Player2:
-				if (gameTurnsCount < 6) {
-					slotStates[slotIndex] = SlotState.Player2;
-					gameUI.OccupySlotWithPlayer2Color(slotIndex);
-					needToSwitchTurn = true;
-				} else {
-					if (slotStates[slotIndex] == SlotState.Player2 && !movingSlotTurn) {
-						setMovingSlotStateForIfHaveEmptyNeighbors(slotIndex);
-					} else if (slotStates[slotIndex] == SlotState.Empty && movingSlotTurn) {
-						moveSavedSlotToTheDestinationIfHaveEmptyNeighbor(slotIndex, SlotState.Player2);
-						needToSwitchTurn = true;
-					}
-				}
-				break;
-		}
-
-		if (needToSwitchTurn) {
-			switchTurn();
-			updateUIWithPlayerTurn();
-			gameTurnsCount++;
-		}
-
-		GameResult gameResult = getGameResultForTurn();
-
-		if (gameResult != GameResult.StillPlaying) {
-			gameUI.FadeBothAvatars();
-			toggleEndScreenWithResult(gameResult);
-		}
 	}
 
 	private void toggleEndScreenWithResult(GameResult result) {

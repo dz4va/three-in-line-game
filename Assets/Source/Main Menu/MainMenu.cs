@@ -13,8 +13,6 @@ public class MainMenu : MonoBehaviour {
 	#region Private Members
 	
 	[SerializeField]
-	private Text 	gameTitle;
-	[SerializeField]
 	private Button 	startButton;
 	
 	#endregion
