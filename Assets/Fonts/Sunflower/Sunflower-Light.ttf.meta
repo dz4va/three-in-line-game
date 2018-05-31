@@ -1,0 +1,22 @@
+fileFormatVersion: 2
+guid: fc933f89963ed4347b0738061ae74eef
+timeCreated: 1527526917
+licenseType: Free
+TrueTypeFontImporter:
+  externalObjects: {}
+  serializedVersion: 4
+  fontSize: 16
+  forceTextureCase: -2
+  characterSpacing: 0
+  characterPadding: 1
+  includeFontData: 1
+  fontName: Sunflower Light
+  fontNames:
+  - Sunflower Light
+  fallbackFontReferences: []
+  customCharacters: 
+  fontRenderingMode: 0
+  ascentCalculationMode: 1
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

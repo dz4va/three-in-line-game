@@ -1,0 +1,22 @@
+fileFormatVersion: 2
+guid: 1c1d6e3dbc37c614ba2babcf28594783
+timeCreated: 1527526917
+licenseType: Free
+TrueTypeFontImporter:
+  externalObjects: {}
+  serializedVersion: 4
+  fontSize: 128
+  forceTextureCase: -1
+  characterSpacing: 0
+  characterPadding: 1
+  includeFontData: 1
+  fontName: Sunflower Medium
+  fontNames:
+  - Sunflower Medium
+  fallbackFontReferences: []
+  customCharacters: 
+  fontRenderingMode: 0
+  ascentCalculationMode: 1
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
