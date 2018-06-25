@@ -433,7 +433,6 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 219298132}
-  - component: {fileID: 219298133}
   m_Layer: 5
   m_Name: Players
   m_TagString: Untagged
@@ -461,17 +460,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &219298133
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 219298131}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4c94bbca8c90be24c8d99751f5968b4c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &223115435
 GameObject:
   m_ObjectHideFlags: 0
@@ -2671,7 +2659,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6e9cf00315cea8946b415f4172ef2203, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gameTitle: {fileID: 1583031048}
   startButton: {fileID: 759721204}
 --- !u!1001 &1157245020
 Prefab:
